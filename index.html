@@ -1,37 +1,14 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Dynamic Quote Generator</title>
-  <style>
-    body { font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; max-width: 680px; margin: 40px auto; padding: 0 16px; }
-    h1 { margin-bottom: 0.5rem; }
-    #quoteDisplay { margin: 16px 0; padding: 16px; border: 1px solid #ddd; border-radius: 8px; min-height: 60px; }
-    #quoteDisplay p { font-size: 1.1rem; margin: 0 0 4px; }
-    small { opacity: 0.8; }
-    .row { display: flex; gap: 8px; margin: 10px 0; }
-    input { flex: 1; padding: 8px; border: 1px solid #ccc; border-radius: 6px; }
-    button { padding: 8px 12px; border: 1px solid #222; background: #222; color: #fff; border-radius: 6px; cursor: pointer; }
-    button:disabled { opacity: 0.6; cursor: not-allowed; }
-  </style>
-</head>
-<body>
-  <h1>Dynamic Quote Generator</h1>
-
-  <!-- Where quotes will appear -->
-  <div id="quoteDisplay"></div>
-
-  <!-- Show new random quote -->
-  <button id="newQuote">Show New Quote</button>
-
-  <!-- Add a new quote -->
-  <div class="row">
-    <input id="newQuoteText" type="text" placeholder="Enter a new quote" />
-    <input id="newQuoteCategory" type="text" placeholder="Enter quote category" />
-    <button id="addQuoteBtn" onclick="addQuote()">Add Quote</button>
-  </div>
-
-  <script src="script.js"></script>
-</body>
-</html>
+ <!DOCTYPE html>
+  <html lang="en">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dynamic Quote Generator</title>
+  </head>
+  <body>
+    <h1>Dynamic Quote Generator</h1>
+    <div id="quoteDisplay"></div>
+    <button id="newQuote">Show New Quote</button>
+    <script src="script.js"></script>
+  </body>
+  </html>
