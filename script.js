@@ -29,3 +29,4 @@ newQuoteBtn.addEventListener("click", displayRandomQuote);
 
 // Show one quote on page load
 displayRandomQuote();
+s
