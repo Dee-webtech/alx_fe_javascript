@@ -1,17 +1,27 @@
-import React from "react";
-import Navbar from "./components/Navbar";
-import Home from "./pages/Home";
-import Footer from "./components/Footer";
+import React, { useState } from "react";
+import LandingPage from "./pages/LandingPage";
+import MainPage from "./pages/MainPage";
+import RecipeDetailsPage from "./pages/RecipeDetailsPage";
 
 function App() {
+  const [currentPage, setCurrentPage] = useState("landing");
+  const [selectedRecipe, setSelectedRecipe] = useState(null);
+
+  const handleStart = () => setCurrentPage("main");
+  const handleViewRecipe = (recipe) => {
+    setSelectedRecipe(recipe);
+    setCurrentPage("details");
+  };
+  const handleBack = () => setCurrentPage("main");
+
   return (
-    <div className="flex flex-col min-h-screen">
-      <Navbar />
-      <main className="flex-grow bg-gray-50">
-        <Home />
-      </main>
-      <Footer />
-    </div>
+    <>
+      {currentPage === "landing" && <LandingPage onStart={handleStart} />}
+      {currentPage === "main" && <MainPage onViewRecipe={handleViewRecipe} />}
+      {currentPage === "details" && (
+        <RecipeDetailsPage recipe={selectedRecipe} onBack={handleBack} />
+      )}
+    </>
   );
 }
 
