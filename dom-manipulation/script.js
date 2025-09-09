@@ -47,20 +47,31 @@ function populateCategories() {
   dropdown.value = selectedCategory; // restore last selected
 }
 
-// Simulate fetching server data
+// Fetch quotes from server
 async function fetchQuotesFromServer() {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts'); // mock API
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
     const data = await response.json();
-    // Transform mock data into quote objects
-    const serverQuotes = data.slice(0, 5).map(post => ({
+    return data.slice(0, 5).map(post => ({
       text: post.title,
       category: "Server",
     }));
-    return serverQuotes;
   } catch (error) {
     console.error("Error fetching server quotes:", error);
     return [];
+  }
+}
+
+// Post a new quote to server
+async function postQuoteToServer(quote) {
+  try {
+    await fetch('https://jsonplaceholder.typicode.com/posts', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(quote)
+    });
+  } catch (error) {
+    console.error("Error posting quote to server:", error);
   }
 }
 
@@ -73,10 +84,14 @@ function addQuote() {
 
   if (!text) return alert("Quote text cannot be empty");
 
-  quotes.push({ text, category });
+  const newQuote = { text, category };
+  quotes.push(newQuote);
   saveQuotes();
   populateCategories();
   showRandomQuote();
+
+  // Post the new quote to server
+  postQuoteToServer(newQuote);
 
   textInput.value = '';
   categoryInput.value = '';
@@ -110,7 +125,7 @@ function importFromJsonFile(event) {
 
 // Sync local quotes with server and handle conflicts
 async function syncWithServer() {
-  const serverQuotes = await fetchQuotesFromServer(); // updated function name
+  const serverQuotes = await fetchQuotesFromServer();
   let updated = false;
 
   serverQuotes.forEach(serverQuote => {
