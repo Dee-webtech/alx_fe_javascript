@@ -48,7 +48,7 @@ function populateCategories() {
 }
 
 // Simulate fetching server data
-async function fetchServerQuotes() {
+async function fetchQuotesFromServer() {
   try {
     const response = await fetch('https://jsonplaceholder.typicode.com/posts'); // mock API
     const data = await response.json();
@@ -110,7 +110,7 @@ function importFromJsonFile(event) {
 
 // Sync local quotes with server and handle conflicts
 async function syncWithServer() {
-  const serverQuotes = await fetchServerQuotes();
+  const serverQuotes = await fetchQuotesFromServer(); // updated function name
   let updated = false;
 
   serverQuotes.forEach(serverQuote => {
@@ -148,14 +148,12 @@ function notifyUser(message) {
   setTimeout(() => { notification.textContent = ''; }, 5000);
 }
 
-// Event listener for "Show New Quote" button
+// Event listeners
 document.getElementById('newQuote').addEventListener('click', showRandomQuote);
+document.getElementById('exportBtn').addEventListener('click', exportToJsonFile);
+document.getElementById('importFile').addEventListener('change', importFromJsonFile);
 
 // Initialize
 populateCategories();
 showRandomQuote();
 setInterval(syncWithServer, 30000); // Sync every 30 seconds
-
-// Link import/export buttons
-document.getElementById('importFile').addEventListener('change', importFromJsonFile);
-document.getElementById('exportBtn').addEventListener('click', exportToJsonFile);
