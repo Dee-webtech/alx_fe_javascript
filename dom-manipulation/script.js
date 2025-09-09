@@ -1,3 +1,29 @@
+function syncQuotes() {
+  fetch('https://jsonplaceholder.typicode.com/posts')
+    .then(response => response.json())
+    .then(serverData => {
+      const serverQuotes = serverData.slice(0, 5).map(post => ({
+        text: post.title,
+        category: "Server",
+      }));
+      let updated = false;
+      serverQuotes.forEach(sq => {
+        if (!quotes.some(q => q.text === sq.text)) {
+          quotes.push(sq);
+          updated = true;
+        }
+      });
+      if (updated) {
+        saveQuotes();
+        populateCategories();
+        showRandomQuote();
+        notifyUser("Quotes updated from server!");
+      }
+    })
+    .catch(err => console.error("Error fetching server quotes:", err));
+}
+
+
 // Load quotes from localStorage if available
 let quotes = JSON.parse(localStorage.getItem('quotes')) || [
   { text: "The journey of a thousand miles begins with one step.", category: "Motivation" },
