@@ -47,11 +47,12 @@ function populateCategories() {
   dropdown.value = selectedCategory; // restore last selected
 }
 
-// Fetch quotes from server
+// Simulate fetching server data
 async function fetchQuotesFromServer() {
   try {
-    const response = await fetch('https://jsonplaceholder.typicode.com/posts');
+    const response = await fetch('https://jsonplaceholder.typicode.com/posts'); // mock API
     const data = await response.json();
+    // Transform mock data into quote objects
     return data.slice(0, 5).map(post => ({
       text: post.title,
       category: "Server",
@@ -59,19 +60,6 @@ async function fetchQuotesFromServer() {
   } catch (error) {
     console.error("Error fetching server quotes:", error);
     return [];
-  }
-}
-
-// Post a new quote to server
-async function postQuoteToServer(quote) {
-  try {
-    await fetch('https://jsonplaceholder.typicode.com/posts', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify(quote)
-    });
-  } catch (error) {
-    console.error("Error posting quote to server:", error);
   }
 }
 
@@ -84,14 +72,10 @@ function addQuote() {
 
   if (!text) return alert("Quote text cannot be empty");
 
-  const newQuote = { text, category };
-  quotes.push(newQuote);
+  quotes.push({ text, category });
   saveQuotes();
   populateCategories();
   showRandomQuote();
-
-  // Post the new quote to server
-  postQuoteToServer(newQuote);
 
   textInput.value = '';
   categoryInput.value = '';
@@ -124,7 +108,7 @@ function importFromJsonFile(event) {
 }
 
 // Sync local quotes with server and handle conflicts
-async function syncWithServer() {
+async function syncQuotes() {
   const serverQuotes = await fetchQuotesFromServer();
   let updated = false;
 
@@ -171,4 +155,4 @@ document.getElementById('importFile').addEventListener('change', importFromJsonF
 // Initialize
 populateCategories();
 showRandomQuote();
-setInterval(syncWithServer, 30000); // Sync every 30 seconds
+setInterval(syncQuotes, 30000); // Sync every 30 seconds
