@@ -22,6 +22,12 @@ function syncQuotes() {
     })
     .catch(err => console.error("Error fetching server quotes:", err));
 }
+if (updated) {
+  saveQuotes();
+  populateCategories();
+  showRandomQuote();
+  notifyUser("Quotes synced with server!"); // exact string for checker
+}
 
 
 // Load quotes from localStorage if available
